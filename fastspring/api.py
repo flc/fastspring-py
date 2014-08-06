@@ -24,6 +24,11 @@ class FastSpringException(Exception):
     def __init__(self, detail, status, message, reason):
         self.detail, self.status, self.message, self.reason = detail, status, message, reason
 
+    def __str__(self):
+        return "{} | status: {} | message: {} | reason: {}".format(
+            self.detail, self.status, self.message, self.reason
+            )
+
 
 class FastSpringAPI(object):
 
