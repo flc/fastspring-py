@@ -21,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 class FastSpringException(Exception):
 
-    def __init__(self, status, message, reason):
-        self.status, self.message, self.reason = status, message, reason
+    def __init__(self, detail, status, message, reason):
+        self.detail, self.status, self.message, self.reason = detail, status, message, reason
 
 
 class FastSpringAPI(object):
@@ -76,7 +76,8 @@ class FastSpringAPI(object):
     def update_subscription(self, reference, subscription_data):
         content, status, message, reason = self._request('PUT', 'subscription/%s' % reference, {'subscription': subscription_data})
         if status != 200:
-            raise FastSpringException('Could not update subscription',status, message, reason)
+            raise FastSpringException('Could not update subscription', status, message, reason)
+        return xmltodict.parse(content)
 
     def cancel_subscription(self, reference):
         """
